@@ -437,7 +437,7 @@ class misc(commands.Cog):
             except ValueError:
                 pass
             if a[0]=='-':
-                banned_tribes.append(a[2:])
+                banned_tribes.append(a[1:])
             elif a[0:4]=='seed':
                 try:
                     seed=int(a[5:])
@@ -454,7 +454,6 @@ class misc(commands.Cog):
             elif a=='allow_duplicates':
                 allow_duplicates=True
 
-        print(n)
         if n > 16 or n < 1:
             return await ctx.send(f'Invalid number of tribes selected, {n}. Must be between 1 and 16')
         
@@ -476,7 +475,7 @@ class misc(commands.Cog):
                                 'Cymanti']
         
         for ban in banned_tribes:
-            # Remove tribes from tribe list. This could cause problems if too many tribes are removed.
+            # Remove tribes from tribe list
             # todo: match by first letter(s) provided?
             removal = next(t for t in tribes if t.upper() == ban.upper())
             tribes.remove(removal)
@@ -485,7 +484,7 @@ class misc(commands.Cog):
             await ctx.send(', '.join(sorted(random.choices(tribes,k=n))))
         else:
             if len(tribes) < n:
-                return await ctx.send(f'Invalid number of tribes selected {n} is greater than the number of unbanned tribes.')
+                return await ctx.send(f'Invalid number of tribes selected, {n}, is greater than the number of unbanned tribes.')
             await ctx.send(', '.join(sorted(random.sample(tribes,k=n))))
 
     @commands.command(aliases=['freeagents', 'roleeloany'], usage='[sort] [role name list]')
